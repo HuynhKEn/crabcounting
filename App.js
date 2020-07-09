@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import * as Font from "expo-font";
 import Navigation from "./src/navigation";
 
+import HostProvider from "./src/context";
 import { FontAwesome } from "@expo/vector-icons";
 import { AppLoading } from "expo";
 function cacheFonts(fonts) {
@@ -30,7 +31,11 @@ export default class AppContainer extends React.Component {
       );
     }
 
-    return <Navigation />;
+    return (
+      <HostProvider>
+        <Navigation />
+      </HostProvider>
+    );
   }
 }
 

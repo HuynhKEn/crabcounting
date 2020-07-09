@@ -1,34 +1,29 @@
 import React from "react";
 import {
-  Button,
-  SafeAreaView,
-  StatusBar,
   View,
   Text,
-  TextInput,
-  StyleSheet,YellowBox 
+  StyleSheet,
 } from "react-native";
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-
+import {Button, Input } from 'react-native-elements'
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Context } from "../../context";
-const Setting = () => {
-  const { host, setHost } = React.useContext(Context);
+const Setting = ({navigation}) => {
+  const { config, updateConfig } = React.useContext(Context);
+  const [text, changeText] = React.useState(config.host);
 
-  const [text, changeText] = React.useState(host);
-  React.useEffect(() => console.log(host), [host]);
   function handleSetHost() {
-    setHost(text);
+    updateConfig({ ...config, host: text });
   }
   return (
     <View style={styles.container}>
-      <TextInput
-        style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
+      <Text style={{fontSize:20,margin:20,fontWeight:'bold'}}>Cập nhật URL của HOST</Text>
+      <Input
         onChangeText={(text) => changeText(text)}
         value={text}
         placeholder="host"
       />
-      <Button style={styles.button_style} onPress={() => handleSetHost()} title="Cập nhật" />
+      <Button style={{margin:10}} onPress={() => handleSetHost()} title="Cập nhật" />
+      <Button style={{margin:10}} onPress={()=> navigation.goBack()} title="Huỷ" buttonStyle={{backgroundColor:'red'}} />
     </View>
   );
 };
@@ -37,11 +32,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 100,
-	justifyContent:"center",
-	width:wp('90%'),
-	marginLeft:16
   },
-  button_style:{
-	  	width:wp('90%')
-  }
 });
